@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sign in · TrawlPro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink-900: #0a1220;
+  --ink-800: #1f2937;
+  --ink-700: #374151;
+  --ink-500: #6b7280;
+  --ink-400: #9ca3af;
+  --ink-300: #d1d5db;
+  --ink-200: #e5e7eb;
+  --ink-100: #f3f4f6;
+  --ink-50:  #fafafa;
+  --line:    #ececec;
+
+  --teal-300: #5eead4;
+  --teal-400: #2dd4bf;
+  --teal-500: #14b8a6;
+  --teal-600: #0d9488;
+  --teal-700: #0f766e;
+  --teal-900: #134e4a;
+
+  --rose:    #e11d48;
+  --shadow-card: 0 1px 2px rgba(10,18,32,0.04), 0 20px 50px -18px rgba(10,18,32,0.18);
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: var(--ink-900); background: #fff;
+  -webkit-font-smoothing: antialiased; font-size: 14px; line-height: 1.55;
+  overflow-x: hidden;
+}
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+input, select { font-family: inherit; font-size: 14px; color: var(--ink-900); }
+a { color: inherit; text-decoration: none; }
+
+/* ===================== SHELL ===================== */
+.shell {
+  display: grid;
+  grid-template-columns: minmax(480px, 1.05fr) minmax(440px, 1fr);
+  min-height: 100vh;
+  background: white;
+}
+
+/* ===================== LEFT (TEAL + GALLERY) ===================== */
+.left {
+  position: relative;
+  padding: 36px 40px 32px;
+  display: flex; flex-direction: column;
+  background:
+    radial-gradient(at 100% 0%, rgba(255,255,255,0.18) 0, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(15,118,110,0.5) 0, transparent 55%),
+    linear-gradient(135deg, #2dd4bf 0%, #14b8a6 45%, #0d9488 100%);
+  color: white;
+  overflow: hidden;
+}
+.left::before {
+  content: ""; position: absolute;
+  right: -250px; top: -120px;
+  width: 700px; height: 700px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.06),
+    0 0 0 60px rgba(255,255,255,0.04),
+    0 0 0 120px rgba(255,255,255,0.03),
+    0 0 0 180px rgba(255,255,255,0.02);
+  pointer-events: none;
+}
+
+/* brand mark */
+.brand {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 22px; font-weight: 800; letter-spacing: -0.4px;
+  color: white;
+  z-index: 1; position: relative;
+}
+.brand .dot { width: 8px; height: 8px; border-radius: 50%; background: white; box-shadow: 0 0 0 4px rgba(255,255,255,0.18); }
+.brand .tag {
+  margin-left: 8px; padding: 4px 10px; border-radius: 999px;
+  font-size: 10.5px; font-weight: 600; letter-spacing: 1.3px; text-transform: uppercase;
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
+}
+
+/* HERO COPY */
+.hero-text { margin-top: 36px; z-index: 1; position: relative; max-width: 480px; }
+.eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;
+  color: rgba(255,255,255,0.92);
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 0; margin-bottom: 18px;
+}
+.eyebrow::before { content: ""; width: 28px; height: 2px; background: rgba(255,255,255,0.6); }
+
+.hero-text h1 {
+  font-size: 46px; line-height: 1.05; letter-spacing: -1.2px;
+  font-weight: 800; margin: 0 0 16px;
+  color: white;
+}
+.hero-text h1 .line-b { display: block; font-weight: 400; font-style: italic; color: rgba(255,255,255,0.92); }
+.hero-text .lead {
+  font-size: 15.5px; line-height: 1.65; max-width: 460px;
+  color: #ffffff; margin: 0 0 8px; font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.12);
+}
+.hero-text .lead b { color: #ffffff; font-weight: 700; }
+.hero-text .underline {
+  width: 70px; height: 3px; background: white; border-radius: 2px; margin-top: 22px;
+  opacity: 0.9;
+}
+
+/* ===== PHOTO GALLERY (boats + fishermen) ===== */
+.gallery {
+  margin-top: 28px; flex: 1;
+  z-index: 1; position: relative;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 12px;
+  min-height: 280px;
+  max-height: 360px;
+}
+.photo {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.25);
+  box-shadow: 0 18px 38px -18px rgba(0,0,0,0.45);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: transform .25s ease;
+}
+.photo:hover { transform: translateY(-2px); }
+.photo .cap {
+  position: absolute; left: 14px; bottom: 12px;
+  color: white; z-index: 3;
+  font-size: 11px; line-height: 1.25;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+}
+.photo .cap b { display: block; font-weight: 700; font-size: 12.5px; }
+.photo .cap small {
+  font-size: 9.5px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 600; opacity: 0.9;
+}
+.photo .grad {
+  position: absolute; inset: 0; z-index: 2;
+  background: linear-gradient(180deg, transparent 45%, rgba(0,0,0,0.65) 100%);
+  pointer-events: none;
+}
+
+/* Crossfade slideshow for the main photo (BoBP homepage carousel) */
+.photo-main {
+  grid-row: 1 / span 2;
+  background-color: #0f766e;
+}
+.slide {
+  position: absolute; inset: 0; z-index: 1;
+  background-position: center; background-size: cover; background-repeat: no-repeat;
+  opacity: 0; transition: opacity 1.2s ease-in-out;
+}
+.slide.active { opacity: 1; }
+
+.photo-tr {
+  background-image: url('https://bobpigo.org/frontend/banner/20231227113156slider-05.jpg');
+  background-color: #134e4a;
+}
+.photo-br {
+  background-image: url('https://bobpigo.org/frontend/banner/20231227113353slider-08.jpg');
+  background-color: #0d9488;
+}
+
+/* slide indicator dots */
+.slide-dots {
+  position: absolute; bottom: 12px; right: 14px; z-index: 4;
+  display: flex; gap: 5px;
+}
+.slide-dots .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  transition: .3s;
+}
+.slide-dots .dot.active { background: white; width: 18px; border-radius: 3px; }
+
+.left-foot {
+  margin-top: 22px; z-index: 1; position: relative;
+  font-size: 11.5px; color: rgba(255,255,255,0.65);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.left-foot a { color: rgba(255,255,255,0.85); font-weight: 500; }
+
+/* ===================== RIGHT (WHITE FORM) ===================== */
+.right {
+  padding: 32px 48px 24px;
+  display: flex; flex-direction: column;
+  position: relative;
+  background: white;
+}
+
+/* PARTNER LOGOS — new horizontal BoBP lockup, bigger */
+.partners {
+  display: flex; align-items: center; gap: 22px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+}
+.partners .bobp-logo {
+  height: 52px; width: auto; display: block;
+}
+.partners .divider-v {
+  width: 1px; height: 38px; background: var(--ink-200);
+}
+.partners .zc-wrap {
+  display: flex; flex-direction: column; gap: 3px;
+}
+.partners .zc-label {
+  font-size: 9px; font-weight: 600; letter-spacing: 1.4px; text-transform: uppercase; color: var(--ink-400);
+}
+.partners .zc-logo { height: 22px; width: auto; display: block; }
+
+.top-meta {
+  margin-left: auto; display: flex; align-items: center; gap: 12px;
+}
+.help-link {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--ink-500); font-weight: 500;
+}
+.help-link:hover { color: var(--ink-900); }
+.lang-tabs {
+  display: inline-flex; padding: 3px;
+  background: var(--ink-100); border-radius: 10px;
+  gap: 1px;
+}
+.lang-tabs button {
+  padding: 5px 9px; border-radius: 7px;
+  font-size: 11px; font-weight: 600; color: var(--ink-500); transition: .15s;
+  display: inline-flex; align-items: center; gap: 5px;
+  line-height: 1;
+}
+.lang-tabs button .lang-flag {
+  width: 14px; height: 10px; border-radius: 2px; overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.1); flex-shrink: 0;
+}
+.lang-tabs button.active { background: white; color: var(--ink-900); box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
+.lang-tabs button.active .lang-flag { border-color: rgba(0,0,0,0.15); }
+.lang-tabs button:hover:not(.active) { color: var(--ink-800); }
+
+/* FORM WRAP */
+.form-wrap {
+  flex: 1;
+  display: flex; flex-direction: column; justify-content: center;
+  max-width: 420px; width: 100%;
+  margin: 24px auto 20px;
+}
+
+.greeting {
+  font-size: 28px; font-weight: 800; letter-spacing: -0.5px; margin: 0 0 6px;
+  display: flex; align-items: center; gap: 10px;
+}
+.greeting .wave {
+  display: inline-block; transform-origin: 70% 70%;
+  animation: wave 2.4s ease-in-out infinite;
+}
+@keyframes wave {
+  0%,60%,100% { transform: rotate(0); }
+  10% { transform: rotate(14deg); }
+  20% { transform: rotate(-8deg); }
+  30% { transform: rotate(14deg); }
+  40% { transform: rotate(-4deg); }
+  50% { transform: rotate(10deg); }
+}
+.sub { color: var(--ink-500); font-size: 13.5px; margin: 0 0 24px; }
+.sub a { color: var(--teal-700); font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+
+/* STAGES */
+.stage { display: none; animation: fade .22s ease; }
+.stage.active { display: block; }
+@keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* RECENT USERS */
+.recent { margin-bottom: 20px; }
+.recent-lbl {
+  font-size: 10px; font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase; color: var(--ink-400);
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.recent-lbl::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+.recent-users { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
+.recent-user {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 10px 6px; border: 1.5px solid var(--line); border-radius: 12px;
+  cursor: pointer; transition: .15s; background: white;
+}
+.recent-user:hover {
+  border-color: var(--teal-500);
+  background: #f0fdfa;
+  transform: translateY(-1px);
+}
+.avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  display: grid; place-items: center; color: white;
+  font-size: 12px; font-weight: 700;
+}
+.avatar.a1 { background: linear-gradient(135deg, #0ea5e9, #0369a1); }
+.avatar.a2 { background: linear-gradient(135deg, #f97316, #c2410c); }
+.avatar.a3 { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+.recent-user b { font-size: 11.5px; font-weight: 600; line-height: 1.2; color: var(--ink-900); }
+.recent-user small { font-size: 9px; color: var(--ink-400); font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase; }
+
+/* DIVIDER */
+.or-divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 18px 0 16px;
+  color: var(--ink-300); font-size: 10px; font-weight: 700; letter-spacing: 1.4px;
+}
+.or-divider::before, .or-divider::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+/* INPUT */
+.field { margin-bottom: 18px; }
+.field-label {
+  font-size: 11px; font-weight: 700; color: var(--ink-700);
+  letter-spacing: 0.3px; margin-bottom: 8px; display: block;
+}
+
+.input-wrap {
+  display: flex; align-items: center; border-bottom: 2px solid var(--ink-200);
+  transition: border-color .2s;
+}
+.input-wrap:focus-within { border-bottom-color: var(--teal-500); }
+.cc {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 12px 9px 0;
+  font-family: 'JetBrains Mono'; font-size: 13.5px; font-weight: 700; color: var(--ink-700);
+  border-right: 1px solid var(--ink-200); margin-right: 10px;
+  cursor: pointer;
+}
+.cc .flag-mini { width: 22px; height: 15px; border-radius: 2px; overflow: hidden; border: 1px solid var(--ink-200); }
+.input-wrap input {
+  flex: 1; padding: 9px 0; border: none; outline: none;
+  font-size: 17px; font-weight: 600; letter-spacing: 0.4px;
+  font-variant-numeric: tabular-nums; background: transparent;
+}
+.input-wrap input::placeholder { color: var(--ink-300); font-weight: 400; }
+
+/* OTP */
+.otp-row { display: flex; gap: 9px; }
+.otp-row input {
+  width: 100%; height: 54px; text-align: center;
+  font-size: 21px; font-weight: 700; color: var(--ink-900);
+  border: none; border-bottom: 2px solid var(--ink-200);
+  outline: none; background: transparent;
+  font-family: 'JetBrains Mono'; transition: .15s;
+}
+.otp-row input:focus { border-bottom-color: var(--teal-500); }
+.otp-row input.filled { border-bottom-color: var(--teal-600); color: var(--teal-700); }
+
+.sent-banner {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 14px; border-radius: 12px;
+  background: #f0fdfa; border: 1px solid #ccfbf1;
+  margin-bottom: 20px;
+}
+.sent-banner .ic {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--teal-600); color: white;
+  display: grid; place-items: center; flex-shrink: 0; font-size: 12px;
+}
+.sent-banner b { font-size: 12.5px; color: var(--teal-900); display: block; }
+.sent-banner small { font-size: 11px; color: var(--teal-700); font-family: 'JetBrains Mono'; }
+
+/* BUTTON */
+.btn {
+  width: 100%; padding: 14px 20px; border-radius: 12px;
+  font-weight: 700; font-size: 14.5px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: .15s; letter-spacing: 0.2px;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--teal-500), var(--teal-600));
+  color: white;
+  box-shadow: 0 10px 22px -10px rgba(13,148,136,0.6);
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 14px 28px -10px rgba(13,148,136,0.7); }
+.btn-primary:disabled { background: var(--ink-300); cursor: not-allowed; transform: none; box-shadow: none; }
+
+.row-between {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 12px; font-size: 12.5px; color: var(--ink-500);
+}
+.row-between a, .row-between button {
+  color: var(--teal-700); font-weight: 600; font-size: 12.5px;
+}
+.row-between a:hover { color: var(--teal-900); }
+.row-between .timer { font-family: 'JetBrains Mono'; font-size: 12px; }
+
+/* ALT BUTTON */
+.alt-btn {
+  display: flex; align-items: center; gap: 10px;
+  width: 100%; padding: 11px 14px; border: 1.5px solid var(--line); border-radius: 12px;
+  font-size: 13px; color: var(--ink-700); font-weight: 600; transition: .15s; margin-top: 8px;
+  background: white;
+}
+.alt-btn:hover { border-color: var(--teal-500); background: #f0fdfa; }
+.alt-btn .ic { font-size: 15px; }
+.alt-btn small {
+  margin-left: auto; font-size: 9.5px; color: var(--ink-400);
+  letter-spacing: 1px; font-weight: 700; text-transform: uppercase;
+}
+
+.shield-row {
+  display: flex; align-items: center; gap: 10px;
+  margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line);
+  font-size: 11px; color: var(--ink-400); line-height: 1.5;
+}
+.shield-row .shield {
+  width: 22px; height: 22px; border-radius: 6px;
+  background: #f0fdfa; color: var(--teal-700);
+  display: grid; place-items: center; flex-shrink: 0;
+}
+
+/* ============== FLAG BAND (NOW BOTTOM RIGHT) ============== */
+.flag-footer {
+  margin-top: auto;
+  padding: 18px 0 0;
+  border-top: 1px solid var(--line);
+}
+.flag-footer-label {
+  font-size: 9.5px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
+  color: var(--ink-400); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.flag-footer-label::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+.flag-row {
+  display: flex; align-items: center; gap: 14px;
+  flex-wrap: wrap;
+}
+.flag-card {
+  display: flex; align-items: center; justify-content: center;
+  padding: 6px;
+  border: 1px solid var(--line); border-radius: 10px;
+  background: white;
+  transition: .15s;
+}
+.flag-card:hover {
+  border-color: var(--teal-500); background: #f0fdfa;
+  transform: translateY(-1px);
+}
+.flag {
+  width: 54px; height: 36px; border-radius: 4px; overflow: hidden;
+  border: 1px solid var(--ink-200); flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.bottom-tag {
+  margin-top: 12px; font-size: 10.5px; color: var(--ink-400);
+  display: flex; align-items: center; gap: 8px; justify-content: space-between;
+}
+.bottom-tag a { color: var(--ink-500); font-weight: 500; }
+.bottom-tag a:hover { color: var(--teal-700); }
+
+/* DEMO HINT */
+.demo-hint {
+  position: fixed; bottom: 18px; right: 18px;
+  background: white; border: 1px solid var(--line);
+  border-radius: 999px; padding: 7px 14px;
+  display: flex; align-items: center; gap: 8px;
+  font-size: 11px; color: var(--ink-500); box-shadow: var(--shadow-card);
+  z-index: 50;
+}
+.demo-hint .kbd {
+  font-family: 'JetBrains Mono'; font-weight: 700;
+  background: var(--ink-900); color: white; padding: 2px 8px; border-radius: 5px; font-size: 11px;
+}
+
+/* ERROR */
+.shake { animation: shake .35s; }
+@keyframes shake {
+  10%,90% { transform: translateX(-2px); }
+  20%,80% { transform: translateX(3px); }
+  30%,50%,70% { transform: translateX(-5px); }
+  40%,60% { transform: translateX(5px); }
+}
+.inline-msg {
+  margin: 12px 0; padding: 10px 12px; border-radius: 10px;
+  font-size: 12px; font-weight: 600;
+  background: #fef2f2; color: var(--rose);
+  border: 1px solid #fecaca;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1100px) {
+  .partners .bobp-logo { height: 46px; }
+  .hero-text h1 { font-size: 38px; }
+  .gallery { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; max-height: 320px; }
+}
+@media (max-width: 980px) {
+  .shell { grid-template-columns: 1fr; }
+  .left { padding: 28px 24px 24px; }
+  .right { padding: 24px 24px 24px; }
+  .gallery { min-height: 220px; max-height: 280px; }
+  .hero-text h1 { font-size: 32px; }
+  .partners { flex-wrap: wrap; gap: 16px; }
+  .top-meta { margin-left: 0; width: 100%; justify-content: space-between; }
+}
+@media (max-width: 560px) {
+  .gallery { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr 1fr; max-height: 360px; }
+  .photo-main { grid-row: 1; }
+  .flag-row { grid-template-columns: repeat(2, 1fr); }
+  .greeting { font-size: 22px; }
+  .otp-row input { height: 46px; font-size: 19px; }
+  .hero-text h1 { font-size: 28px; }
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ========================= LEFT (TEAL + BOAT/FISHER GALLERY) ========================= -->
+  <section class="left">
+
+    <div class="brand">
+      <span class="dot"></span> TrawlPro
+      <span class="tag" data-i18n="brand_tag">Your voyage buddy · ISTN 2026</span>
+    </div>
+
+    <div class="hero-text">
+      <div class="eyebrow" data-i18n="eyebrow">A fisher's assistant, built with community</div>
+      <h1>
+        <span data-i18n="h1_a">For every boat.</span><br/>
+        <span data-i18n="h1_b">Every voyage.</span><br/>
+        <span class="line-b" data-i18n="h1_c">Every kilo.</span>
+      </h1>
+      <p class="lead" data-i18n="lead">
+        TrawlPro is a fisher's assistant built with boat owners, captains and harbour staff of the Bay of Bengal. Record catches offline at sea. Track expenses. Settle crew fairly. Own your data.
+      </p>
+      <div class="underline"></div>
+    </div>
+
+    <!-- BoBP homepage slideshow — main photo crossfades, two companions static -->
+    <div class="gallery">
+      <div class="photo photo-main" id="photo-main">
+        <div class="slide active" data-caption="Bay of Bengal fishing communities" style="background-image: url('https://bobpigo.org/frontend/banner/20250321063726HomePageSlider-001.jpg');"></div>
+        <div class="slide" data-caption="Artisanal fishery, Bay of Bengal region" style="background-image: url('https://bobpigo.org/frontend/banner/20250321063805HomePageSlider-002.jpg');"></div>
+        <div class="slide" data-caption="Harbour life · coastal livelihoods" style="background-image: url('https://bobpigo.org/frontend/banner/20250321063827HomePageSlider-003.jpg');"></div>
+        <div class="slide" data-caption="Traditional craft & catch" style="background-image: url('https://bobpigo.org/frontend/banner/20250321063851HomePageslider-004.jpg');"></div>
+        <div class="slide" data-caption="Fishing fleet at dawn" style="background-image: url('https://bobpigo.org/frontend/banner/20231227112758slider-01.jpg');"></div>
+
+        <div class="grad"></div>
+        <div class="cap">
+          <small>BoBP-IGO · Homepage slideshow</small>
+          <b id="slide-caption">Bay of Bengal fishing communities</b>
+        </div>
+        <div class="slide-dots" id="slide-dots">
+          <span class="dot active"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+      </div>
+
+      <div class="photo photo-tr">
+        <div class="grad"></div>
+        <div class="cap">
+          <small>BoBP-IGO</small>
+          <b data-i18n="photo_harbours">Fishing harbours of the region</b>
+        </div>
+      </div>
+
+      <div class="photo photo-br">
+        <div class="grad"></div>
+        <div class="cap">
+          <small>BoBP-IGO</small>
+          <b data-i18n="photo_fishers">Fishermen at work</b>
+        </div>
+      </div>
+    </div>
+
+    <div class="left-foot">
+      <span data-i18n="left_foot">© 2026 TrawlPro · Your buddy for the Bay of Bengal</span>
+      <a href="#" data-i18n="left_foot_link">EU IUU · US SIMP aligned</a>
+    </div>
+  </section>
+
+  <!-- ========================= RIGHT (WHITE FORM) ========================= -->
+  <section class="right">
+
+    <!-- PARTNER LOGOS — new horizontal BoBP lockup, bigger -->
+    <div class="partners">
+      <img class="bobp-logo"
+           src="https://bobpigo.org/frontend/galleries/BOBP-Logo/BOBPIGO_Logo-Horizontal.jpg"
+           alt="BoBP-IGO — Bay of Bengal Programme Inter-Governmental Organisation"
+           onerror="this.onerror=null; this.src='https://bobpigo.org/img/logo-bobp-new.png';"/>
+      <div class="divider-v"></div>
+      <div class="zc-wrap">
+        <span class="zc-label" data-i18n="zc_label">Technology Partner</span>
+        <img class="zc-logo" src="https://zeroco.de/assets/images/logo.png" alt="Zerocode"/>
+      </div>
+
+      <div class="top-meta">
+        <a href="#" class="help-link" data-i18n="help">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.5 9 a2.5 2.5 0 0 1 5 0 c0 1.5 -2.5 2 -2.5 4"/><circle cx="12" cy="17" r="0.5" fill="currentColor"/></svg>
+          Help
+        </a>
+        <div class="lang-tabs" id="lang-tabs">
+          <button class="active" data-lang="en" title="English">EN</button>
+          <button data-lang="hi" title="India — Hindi">
+            <span class="lang-flag"><svg viewBox="0 0 60 40" width="100%" height="100%"><rect width="60" height="13.33" fill="#FF9933"/><rect y="13.33" width="60" height="13.33" fill="#fff"/><rect y="26.66" width="60" height="13.33" fill="#138808"/><circle cx="30" cy="20" r="3.6" fill="none" stroke="#000080" stroke-width="0.5"/></svg></span>
+            हिन्दी
+          </button>
+          <button data-lang="bn" title="Bangladesh — Bangla">
+            <span class="lang-flag"><svg viewBox="0 0 60 36" width="100%" height="100%"><rect width="60" height="36" fill="#006A4E"/><circle cx="27" cy="18" r="10.8" fill="#F42A41"/></svg></span>
+            বাংলা
+          </button>
+          <button data-lang="si" title="Sri Lanka — Sinhala">
+            <span class="lang-flag"><svg viewBox="0 0 60 36" width="100%" height="100%"><rect width="60" height="36" fill="#FFBE29"/><rect x="3" y="3" width="7" height="30" fill="#00534E"/><rect x="10" y="3" width="7" height="30" fill="#FF8400"/><rect x="20" y="3" width="37" height="30" fill="#8D153A"/></svg></span>
+            සිංහල
+          </button>
+          <button data-lang="dv" title="Maldives — Dhivehi">
+            <span class="lang-flag"><svg viewBox="0 0 60 40" width="100%" height="100%"><rect width="60" height="40" fill="#D21034"/><rect x="9" y="6.4" width="42" height="27.2" fill="#007E3A"/><circle cx="33" cy="20" r="7.2" fill="#fff"/><circle cx="35.5" cy="20" r="7.2" fill="#007E3A"/></svg></span>
+            ދިވެހި
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="form-wrap">
+      <h2 class="greeting" id="title"><span data-i18n="greeting">Good to see you, friend</span> <span class="wave">👋</span></h2>
+      <p class="sub" id="subtitle" data-i18n="sub_html">
+        First time meeting me? <a href="#">Request access</a> — I'm free for BoBP pilot harbours.
+      </p>
+
+      <!-- STAGE 1 -->
+      <form class="stage active" id="stage1" onsubmit="event.preventDefault(); sendOtp()">
+
+        <div class="recent">
+          <div class="recent-lbl" data-i18n="recent_label">Who's here today?</div>
+          <div class="recent-users">
+            <div class="recent-user" onclick="quickUser('Ramesh K.', '98765 12340')">
+              <div class="avatar a1">RK</div><b>Ramesh K.</b><small data-i18n="role_captain">Captain</small>
+            </div>
+            <div class="recent-user" onclick="quickUser('Priya S.', '98765 43210')">
+              <div class="avatar a2">PS</div><b>Priya S.</b><small data-i18n="role_staff">Staff</small>
+            </div>
+            <div class="recent-user" onclick="quickUser('Ashok M.', '98765 55601')">
+              <div class="avatar a3">AM</div><b>Ashok M.</b><small data-i18n="role_owner">Owner</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="or-divider" data-i18n="or_divider">OR TELL ME YOUR NUMBER</div>
+
+        <div class="field">
+          <label class="field-label" data-i18n="field_label">Your mobile number</label>
+          <div class="input-wrap">
+            <div class="cc">
+              <div class="flag-mini">
+                <svg viewBox="0 0 60 40" width="100%" height="100%">
+                  <rect width="60" height="13.33" fill="#FF9933"/>
+                  <rect y="13.33" width="60" height="13.33" fill="#fff"/>
+                  <rect y="26.66" width="60" height="13.33" fill="#138808"/>
+                  <circle cx="30" cy="20" r="3.6" fill="none" stroke="#000080" stroke-width="0.5"/>
+                </svg>
+              </div>
+              <span>+91</span>
+            </div>
+            <input id="phone" type="tel" placeholder="98765 43210" maxlength="11" autocomplete="tel" />
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+          <span data-i18n="cta_primary">Send me a code</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+
+        <button type="button" class="alt-btn" onclick="alert('State Fisheries Dept SSO in pilot')">
+          <span class="ic">🏛️</span>
+          <span data-i18n="alt_sso">Sign in with State Fisheries Dept</span>
+          <small data-i18n="pilot_tag">Pilot</small>
+        </button>
+
+        <div class="shield-row">
+          <div class="shield">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2 L20 5 v7 c0 5 -4 8 -8 10 c-4 -2 -8 -5 -8 -10 V5 z"/></svg>
+          </div>
+          <span data-i18n="shield_stage1">Your catch data stays yours. I'm protected under ISTN fisher data rights — no enforcement use for 5 years.</span>
+        </div>
+      </form>
+
+      <!-- STAGE 2 -->
+      <form class="stage" id="stage2" onsubmit="event.preventDefault(); verifyOtp()">
+        <div class="sent-banner">
+          <div class="ic">✓</div>
+          <div>
+            <b data-i18n="sent_title">Your code is on the way</b>
+            <small id="masked-phone">+91 98765 43210 · <span data-i18n="expires_in">expires in</span> <span id="timer">00:59</span></small>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field-label" data-i18n="otp_label">Enter the 6-digit code</label>
+          <div class="otp-row" id="otp-row">
+            <input maxlength="1" inputmode="numeric"/>
+            <input maxlength="1" inputmode="numeric"/>
+            <input maxlength="1" inputmode="numeric"/>
+            <input maxlength="1" inputmode="numeric"/>
+            <input maxlength="1" inputmode="numeric"/>
+            <input maxlength="1" inputmode="numeric"/>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="verify-btn" disabled>
+          <span data-i18n="cta_verify">Verify & come aboard</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        </button>
+
+        <div class="row-between">
+          <button type="button" onclick="goBack()" data-i18n="back_btn">← Use a different number</button>
+          <a href="#" onclick="event.preventDefault(); resendOtp()" data-i18n="resend_link">Resend code</a>
+        </div>
+
+        <div class="shield-row">
+          <div class="shield">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="14" r="7"/><path d="M8 14 v-3 a4 4 0 0 1 8 0 v3"/></svg>
+          </div>
+          <span data-i18n="shield_stage2">Shared tablet detected. I'll forget your session in 8 hours.</span>
+        </div>
+      </form>
+    </div>
+
+    <!-- ============== FLAG BAND (BOTTOM RIGHT, AS REQUESTED) ============== -->
+    <div class="flag-footer">
+      <div class="flag-footer-label" data-i18n="flag_label">🌊 I sail with four nations of the Bay of Bengal</div>
+      <div class="flag-row">
+
+        <div class="flag-card" title="India">
+          <div class="flag">
+            <svg viewBox="0 0 60 40" width="100%" height="100%">
+              <rect width="60" height="13.33" fill="#FF9933"/>
+              <rect y="13.33" width="60" height="13.33" fill="#fff"/>
+              <rect y="26.66" width="60" height="13.33" fill="#138808"/>
+              <circle cx="30" cy="20" r="4.6" fill="none" stroke="#000080" stroke-width="0.6"/>
+              <circle cx="30" cy="20" r="1.1" fill="#000080"/>
+              <g stroke="#000080" stroke-width="0.35">
+                <line x1="30" y1="15.4" x2="30" y2="24.6"/>
+                <line x1="25.4" y1="20" x2="34.6" y2="20"/>
+                <line x1="26.7" y1="16.7" x2="33.3" y2="23.3"/>
+                <line x1="33.3" y1="16.7" x2="26.7" y2="23.3"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <div class="flag-card" title="Bangladesh">
+          <div class="flag">
+            <svg viewBox="0 0 60 36" width="100%" height="100%">
+              <rect width="60" height="36" fill="#006A4E"/>
+              <circle cx="27" cy="18" r="10.8" fill="#F42A41"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="flag-card" title="Sri Lanka">
+          <div class="flag">
+            <svg viewBox="0 0 60 36" width="100%" height="100%">
+              <rect width="60" height="36" fill="#FFBE29"/>
+              <rect x="3" y="3" width="7" height="30" fill="#00534E"/>
+              <rect x="10" y="3" width="7" height="30" fill="#FF8400"/>
+              <rect x="20" y="3" width="37" height="30" fill="#8D153A"/>
+              <g fill="#FFBE29">
+                <circle cx="22" cy="6" r="1.2"/><circle cx="22" cy="30" r="1.2"/>
+                <circle cx="55" cy="6" r="1.2"/><circle cx="55" cy="30" r="1.2"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <div class="flag-card" title="Maldives">
+          <div class="flag">
+            <svg viewBox="0 0 60 40" width="100%" height="100%">
+              <rect width="60" height="40" fill="#D21034"/>
+              <rect x="9" y="6.4" width="42" height="27.2" fill="#007E3A"/>
+              <circle cx="33" cy="20" r="7.2" fill="#fff"/>
+              <circle cx="35.5" cy="20" r="7.2" fill="#007E3A"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-tag">
+        <span data-i18n="bottom_tag">BoBP-IGO member nations · Joint pilot</span>
+        <span>
+          <a href="#" data-i18n="terms">Terms</a> · <a href="#" data-i18n="privacy">Privacy</a> · <a href="#" data-i18n="rights">Fisher data rights</a>
+        </span>
+      </div>
+    </div>
+
+  </section>
+</div>
+
+<div class="demo-hint">
+  <span>Demo OTP</span>
+  <span class="kbd">123456</span>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+
+function quickUser(name, masked) {
+  $('#phone').value = masked;
+  sendOtp(name);
+}
+
+function sendOtp(greetName) {
+  const raw = $('#phone').value.replace(/\D/g, '');
+  if (raw.length < 10) {
+    $('.input-wrap').classList.add('shake');
+    setTimeout(() => $('.input-wrap').classList.remove('shake'), 400);
+    $('#phone').focus();
+    return;
+  }
+  const pretty = '+91 ' + raw.slice(0, 5) + ' ' + raw.slice(5, 10);
+  const dict = i18n[currentLang] || i18n.en;
+  $('#masked-phone').innerHTML = pretty + ' · ' + dict.expires_in + ' <span id="timer">00:59</span>';
+
+  $('#stage1').classList.remove('active');
+  $('#stage2').classList.add('active');
+  const titleEl = $('#title');
+  if (greetName) {
+    titleEl.innerHTML = dict.welcome_back.replace('{name}', greetName.split(' ')[0]) + ' <span class="wave">👋</span>';
+  } else {
+    titleEl.innerHTML = dict.verify_your_number + ' 🔐';
+  }
+  $('#subtitle').innerHTML = dict.enter_otp_sub;
+  setTimeout(() => $$('.otp-row input')[0].focus(), 80);
+  startTimer();
+}
+
+const otpInputs = $$('.otp-row input');
+otpInputs.forEach((inp, i) => {
+  inp.addEventListener('input', e => {
+    const v = e.target.value.replace(/\D/g, '');
+    e.target.value = v;
+    if (v) { e.target.classList.add('filled'); if (i < otpInputs.length - 1) otpInputs[i+1].focus(); }
+    else   { e.target.classList.remove('filled'); }
+    checkOtpComplete();
+  });
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'Backspace' && !inp.value && i > 0) otpInputs[i-1].focus();
+  });
+  inp.addEventListener('paste', e => {
+    e.preventDefault();
+    const data = (e.clipboardData.getData('text') || '').replace(/\D/g,'').slice(0,6).split('');
+    data.forEach((d, idx) => { if (otpInputs[idx]) { otpInputs[idx].value = d; otpInputs[idx].classList.add('filled'); } });
+    if (data.length === 6) otpInputs[5].focus();
+    checkOtpComplete();
+  });
+});
+
+function checkOtpComplete() {
+  const all = Array.from(otpInputs).every(i => i.value);
+  $('#verify-btn').disabled = !all;
+}
+
+function verifyOtp() {
+  const dict = i18n[currentLang] || i18n.en;
+  const code = Array.from(otpInputs).map(i => i.value).join('');
+  if (code !== '123456') {
+    $('.otp-row').classList.add('shake');
+    setTimeout(() => $('.otp-row').classList.remove('shake'), 400);
+    otpInputs.forEach(i => { i.value = ''; i.classList.remove('filled'); });
+    otpInputs[0].focus();
+    $('#verify-btn').disabled = true;
+    showInline(dict.invalid_code);
+    return;
+  }
+  $('#verify-btn').innerHTML = dict.signing_in;
+  $('#verify-btn').disabled = true;
+  setTimeout(() => window.location.href = 'trawlpro.html', 900);
+}
+
+function showInline(msg) {
+  document.getElementById('inline-msg')?.remove();
+  const b = document.createElement('div');
+  b.id = 'inline-msg'; b.className = 'inline-msg'; b.textContent = msg;
+  $('#stage2').insertBefore(b, $('#verify-btn'));
+  setTimeout(() => b.remove(), 3500);
+}
+
+let timerInterval;
+function startTimer() {
+  let s = 59;
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    s--;
+    const t = document.getElementById('timer');
+    if (t) t.textContent = '00:' + String(s).padStart(2,'0');
+    if (s <= 0) { clearInterval(timerInterval); if (t) t.textContent = 'expired'; }
+  }, 1000);
+}
+
+function resendOtp() {
+  const dict = i18n[currentLang] || i18n.en;
+  otpInputs.forEach(i => { i.value=''; i.classList.remove('filled'); });
+  otpInputs[0].focus();
+  $('#verify-btn').disabled = true;
+  showInline(dict.new_code_sent);
+  const im = document.getElementById('inline-msg');
+  if (im) { im.style.background = '#f0fdfa'; im.style.color = 'var(--teal-700)'; im.style.borderColor = '#ccfbf1'; }
+  startTimer();
+}
+
+function goBack() {
+  const dict = i18n[currentLang] || i18n.en;
+  $('#stage2').classList.remove('active');
+  $('#stage1').classList.add('active');
+  $('#title').innerHTML = dict.greeting + ' <span class="wave">👋</span>';
+  $('#subtitle').innerHTML = dict.sub_html;
+  clearInterval(timerInterval);
+  otpInputs.forEach(i => { i.value=''; i.classList.remove('filled'); });
+  $('#phone').value = '';
+  $('#phone').focus();
+}
+
+$('#phone').addEventListener('input', e => {
+  let v = e.target.value.replace(/\D/g,'').slice(0,10);
+  if (v.length > 5) v = v.slice(0,5) + ' ' + v.slice(5);
+  e.target.value = v;
+});
+
+// ===================== I18N — four BoBP country languages =====================
+const i18n = {
+  en: {
+    _rtl: false,
+    help: 'Help',
+    brand_tag: "A fisher's assistant · ISTN 2026",
+    eyebrow: "A fisher's assistant, built with community",
+    h1_a: 'For every boat.',
+    h1_b: 'Every voyage.',
+    h1_c: 'Every kilo.',
+    lead: "TrawlPro is a fisher's assistant built with boat owners, captains and harbour staff of the Bay of Bengal. Record catches offline at sea. Track expenses. Settle crew fairly. Own your data.",
+    zc_label: 'Technology Partner',
+    greeting: 'Good to see you, friend',
+    sub_html: "First time meeting me? <a href='#'>Request access</a> — I'm free for BoBP pilot harbours.",
+    recent_label: "Who's here today?",
+    role_captain: 'Captain', role_staff: 'Staff', role_owner: 'Owner',
+    or_divider: 'OR TELL ME YOUR NUMBER',
+    field_label: 'Your mobile number',
+    cta_primary: 'Send me a code',
+    alt_sso: 'Sign in with State Fisheries Dept',
+    pilot_tag: 'Pilot',
+    shield_stage1: "Your catch data stays yours. I'm protected under ISTN fisher data rights — no enforcement use for 5 years.",
+    sent_title: 'Your code is on the way',
+    expires_in: 'expires in',
+    otp_label: 'Enter the 6-digit code',
+    cta_verify: 'Verify & come aboard',
+    back_btn: '← Use a different number',
+    resend_link: 'Resend code',
+    shield_stage2: "Shared tablet detected. I'll forget your session in 8 hours.",
+    flag_label: '🌊 I sail with four nations of the Bay of Bengal',
+    bottom_tag: 'BoBP-IGO member nations · Joint pilot',
+    terms: 'Terms', privacy: 'Privacy', rights: 'Fisher data rights',
+    left_foot: '© 2026 TrawlPro · Your buddy for the Bay of Bengal',
+    left_foot_link: 'EU IUU · US SIMP aligned',
+    photo_harbours: 'Fishing harbours of the region',
+    photo_fishers: 'Fishermen at work',
+    // dynamic (used by JS):
+    welcome_back: 'Welcome back, {name}',
+    verify_your_number: 'Verify your number',
+    enter_otp_sub: 'Enter the 6-digit code I sent to your phone.',
+    invalid_code: 'That code doesn’t match. Try 123456 for the demo.',
+    new_code_sent: "I sent a new code (use 123456 for demo).",
+    signing_in: 'Coming aboard…'
+  },
+
+  hi: {
+    _rtl: false,
+    help: 'मदद',
+    brand_tag: 'मछुआरा सहायक · ISTN 2026',
+    eyebrow: 'समुदाय के साथ बना मछुआरा सहायक',
+    h1_a: 'हर नाव के लिए।',
+    h1_b: 'हर यात्रा।',
+    h1_c: 'हर किलो।',
+    lead: 'TrawlPro एक मछुआरा सहायक है, जो बंगाल की खाड़ी के नाव मालिकों, कप्तानों और बंदरगाह कर्मचारियों के साथ बनाया गया है। समुद्र में ऑफ़लाइन पकड़ दर्ज करें। खर्च ट्रैक करें। चालक दल का ईमानदारी से निपटान करें। अपने डेटा के मालिक बनें।',
+    zc_label: 'तकनीकी साझेदार',
+    greeting: 'आपसे मिलकर खुशी हुई, दोस्त',
+    sub_html: "पहली बार? <a href='#'>पहुँच माँगें</a> — BoBP पायलट बंदरगाहों के लिए मुफ़्त।",
+    recent_label: 'आज कौन आया है?',
+    role_captain: 'कप्तान', role_staff: 'स्टाफ़', role_owner: 'मालिक',
+    or_divider: 'या अपना नंबर बताइए',
+    field_label: 'आपका मोबाइल नंबर',
+    cta_primary: 'मुझे कोड भेजें',
+    alt_sso: 'राज्य मत्स्य विभाग से साइन इन',
+    pilot_tag: 'पायलट',
+    shield_stage1: 'आपका डेटा आपका है। ISTN मछुआरा अधिकारों के तहत मैं सुरक्षित हूँ — 5 साल तक कोई कार्यवाही नहीं।',
+    sent_title: 'आपका कोड भेज दिया',
+    expires_in: 'समय',
+    otp_label: '6-अंकीय कोड डालें',
+    cta_verify: 'जहाज़ पर आइए',
+    back_btn: '← कोई और नंबर',
+    resend_link: 'फिर भेजें',
+    shield_stage2: 'साझा टैबलेट। मैं 8 घंटे में आपका सत्र भूल जाऊँगा।',
+    flag_label: '🌊 मैं बंगाल की खाड़ी के चार देशों के साथ चलता हूँ',
+    bottom_tag: 'BoBP-IGO सदस्य देश · संयुक्त पायलट',
+    terms: 'नियम', privacy: 'गोपनीयता', rights: 'मछुआरा डेटा अधिकार',
+    left_foot: '© 2026 TrawlPro · बंगाल की खाड़ी के लिए आपका साथी',
+    left_foot_link: 'EU IUU · US SIMP अनुपालन',
+    photo_harbours: 'क्षेत्र के मछुआरा बंदरगाह',
+    photo_fishers: 'काम पर मछुआरे',
+    welcome_back: 'वापसी पर स्वागत है, {name}',
+    verify_your_number: 'अपना नंबर सत्यापित करें',
+    enter_otp_sub: 'आपके फ़ोन पर भेजा 6-अंकीय कोड डालें।',
+    invalid_code: 'कोड मेल नहीं खाता। डेमो के लिए 123456 आज़माएँ।',
+    new_code_sent: 'नया कोड भेजा (डेमो के लिए 123456)।',
+    signing_in: 'जहाज़ पर आ रहे हैं…'
+  },
+
+  bn: {
+    _rtl: false,
+    help: 'সাহায্য',
+    brand_tag: 'জেলে সহকারী · ISTN 2026',
+    eyebrow: 'সম্প্রদায়ের সাথে তৈরি জেলে সহকারী',
+    h1_a: 'প্রতিটি নৌকার জন্য।',
+    h1_b: 'প্রতিটি যাত্রা।',
+    h1_c: 'প্রতিটি কেজি।',
+    lead: 'TrawlPro একজন জেলে সহকারী, যা বঙ্গোপসাগরের নৌকা মালিক, ক্যাপ্টেন এবং বন্দর কর্মীদের সাথে তৈরি। সমুদ্রে অফলাইন ক্যাচ রেকর্ড করুন। খরচ ট্র্যাক করুন। ক্রু ন্যায্যভাবে মিটিয়ে দিন। আপনার ডেটার মালিক থাকুন।',
+    zc_label: 'প্রযুক্তি অংশীদার',
+    greeting: 'আপনাকে দেখে ভালো লাগল, বন্ধু',
+    sub_html: "প্রথমবার? <a href='#'>অ্যাক্সেস চান</a> — BoBP পাইলট বন্দরের জন্য বিনামূল্যে।",
+    recent_label: 'আজ এখানে কে?',
+    role_captain: 'ক্যাপ্টেন', role_staff: 'কর্মী', role_owner: 'মালিক',
+    or_divider: 'অথবা নম্বর লিখুন',
+    field_label: 'আপনার মোবাইল নম্বর',
+    cta_primary: 'আমাকে কোড পাঠান',
+    alt_sso: 'রাজ্য মৎস্য বিভাগ থেকে সাইন ইন',
+    pilot_tag: 'পাইলট',
+    shield_stage1: 'আপনার ডেটা আপনার। ISTN জেলে অধিকারে আমি সুরক্ষিত — ৫ বছর প্রয়োগ নেই।',
+    sent_title: 'আপনার কোড পাঠানো হয়েছে',
+    expires_in: 'মেয়াদ',
+    otp_label: '৬-সংখ্যার কোড লিখুন',
+    cta_verify: 'নৌকায় উঠুন',
+    back_btn: '← অন্য নম্বর',
+    resend_link: 'আবার পাঠান',
+    shield_stage2: 'শেয়ার করা ট্যাবলেট। আমি ৮ ঘণ্টায় সেশন ভুলে যাব।',
+    flag_label: '🌊 আমি বঙ্গোপসাগরের চারটি দেশের সাথে চলি',
+    bottom_tag: 'BoBP-IGO সদস্য দেশ · যৌথ পাইলট',
+    terms: 'শর্তাবলী', privacy: 'গোপনীয়তা', rights: 'জেলে ডেটা অধিকার',
+    left_foot: '© 2026 TrawlPro · বঙ্গোপসাগরের জন্য আপনার সঙ্গী',
+    left_foot_link: 'EU IUU · US SIMP সংগতি',
+    photo_harbours: 'অঞ্চলের মৎস্য বন্দর',
+    photo_fishers: 'কাজে জেলেরা',
+    welcome_back: 'স্বাগতম, {name}',
+    verify_your_number: 'আপনার নম্বর যাচাই করুন',
+    enter_otp_sub: 'আপনার ফোনে পাঠানো ৬-সংখ্যার কোড লিখুন।',
+    invalid_code: 'কোড মিলছে না। ডেমোর জন্য 123456 চেষ্টা করুন।',
+    new_code_sent: 'নতুন কোড পাঠানো হয়েছে (ডেমোর জন্য 123456)।',
+    signing_in: 'নৌকায় উঠছি…'
+  },
+
+  si: {
+    _rtl: false,
+    help: 'උදව්',
+    brand_tag: 'ධීවර සහායකයා · ISTN 2026',
+    eyebrow: 'ප්‍රජාව සමග තැනූ ධීවර සහායකයා',
+    h1_a: 'සෑම නෞකාවකටම.',
+    h1_b: 'සෑම ගමනකටම.',
+    h1_c: 'සෑම කිලෝවක්ම.',
+    lead: 'TrawlPro යනු ධීවර සහායකයෙකි, බෙංගාල බොක්කේ නෞකා හිමිකරුවන්, කපිතන්වරුන් සහ තොටුපළ කාර්ය මණ්ඩලය සමග තැනූවකි. මුහුදේ ඕෆ්ලයින් ඇල්ලීම් සටහන් කරන්න. වියදම් ට්‍රැක් කරන්න. කාර්ය මණ්ඩල කොටස් සාධාරණව බෙදන්න. ඔබේ දත්තවල අයිතිය තබාගන්න.',
+    zc_label: 'තාක්ෂණ හවුල්කරු',
+    greeting: 'ඔබව දැකීම සතුටක්, මිතුරා',
+    sub_html: "මුල්ම වතාව ද? <a href='#'>ප්‍රවේශය ඉල්ලන්න</a> — BoBP පරීක්ෂණ තොටු සඳහා නොමිලේ.",
+    recent_label: 'අද මෙතන කවුද?',
+    role_captain: 'කපිතාන්', role_staff: 'කාර්ය මණ්ඩල', role_owner: 'හිමිකරු',
+    or_divider: 'හෝ ඔබේ අංකය කියන්න',
+    field_label: 'ඔබේ ජංගම අංකය',
+    cta_primary: 'මට කේතයක් එවන්න',
+    alt_sso: 'ප්‍රාන්ත ධීවර දෙපාර්තමේන්තුවෙන් පුරනය',
+    pilot_tag: 'පරීක්ෂණ',
+    shield_stage1: 'ඔබේ දත්ත ඔබේමයි. ISTN ධීවර අයිතිවාසිකම් යටතේ මම ආරක්ෂිතයි — වසර 5ක් බලාත්මක නොවේ.',
+    sent_title: 'ඔබේ කේතය යවා ඇත',
+    expires_in: 'කල් ඉකුත්',
+    otp_label: 'අංක 6 කේතය ඇතුළු කරන්න',
+    cta_verify: 'නෞකාවට එන්න',
+    back_btn: '← වෙනත් අංකයක්',
+    resend_link: 'නැවත යවන්න',
+    shield_stage2: 'බෙදාගත් ටැබ්ලටය. පැය 8 කින් මම ඔබේ සැසිය අමතක කරමි.',
+    flag_label: '🌊 මම බෙංගාල බොක්කේ රටවල් හතරක් සමග යමි',
+    bottom_tag: 'BoBP-IGO සාමාජික රටවල් · එක්සත් පරීක්ෂණ',
+    terms: 'නියමයන්', privacy: 'පෞද්ගලිකත්වය', rights: 'ධීවර දත්ත අයිතිවාසිකම්',
+    left_foot: '© 2026 TrawlPro · බෙංගාල බොක්කේ ඔබේ මිතුරා',
+    left_foot_link: 'EU IUU · US SIMP අනුකූල',
+    photo_harbours: 'කලාපයේ ධීවර තොටුපළවල්',
+    photo_fishers: 'වැඩේ ධීවරයින්',
+    welcome_back: 'නැවත සාදරයෙන් පිළිගනිමු, {name}',
+    verify_your_number: 'ඔබේ අංකය සත්‍යාපනය කරන්න',
+    enter_otp_sub: 'ඔබේ දුරකතනයට එවූ අංක 6 කේතය ඇතුළු කරන්න.',
+    invalid_code: 'කේතය නොගැලපේ. නිරූපකය සඳහා 123456 උත්සාහ කරන්න.',
+    new_code_sent: 'නව කේතයක් යවා ඇත (නිරූපකය සඳහා 123456).',
+    signing_in: 'නෞකාවට එමින්…'
+  },
+
+  dv: {
+    _rtl: true,
+    help: 'އެހީ',
+    brand_tag: 'މަސްވެރި އެހީތެރިޔާ · ISTN 2026',
+    eyebrow: 'ޖަމާޢަތާ އެކު ތައްޔާރުކޮށްފައިވާ މަސްވެރި އެހީތެރިޔާ',
+    h1_a: 'ކޮންމެ އޮޑިއަކަށް.',
+    h1_b: 'ކޮންމެ ދަތުރަކަށް.',
+    h1_c: 'ކޮންމެ ކިލޯއަކަށް.',
+    lead: 'TrawlPro އަކީ މަސްވެރި އެހީތެރިޔެކެވެ، ބެންގާލް ބޭޒްގެ އޮޑިވެރިންނާއި، ކެޕްޓަނުންނާއި ބަނދަރު މުވައްޒަފުންނާ އެކު ތައްޔާރުކޮށްފައިވެއެވެ. ކަނޑުމަތީ އޮފްލައިންގައި ހިފާ ބައިތައް ރެކޯޑްކުރޭ. ޚަރަދުތައް ބަލަހައްޓާ. ކުރޫންނަށް ޢަދުލުވެރިކަމާއެކު ބައިކުރޭ. ތިބާގެ ޑޭޓާގެ ވެރިއަކަށް ވޭ.',
+    zc_label: 'ޓެކްނޮލޮޖީ ޕާޓްނަރ',
+    greeting: 'ތިބާ ދުށުން ހިތްހަމަޖެހޭ، ރަޙުމަތްތެރިޔާ',
+    sub_html: "ފުރަތަމަ ފަހަރު؟ <a href='#'>ވަނުމުގެ ހުއްދައަށް އެދޭ</a> — BoBP ޕައިލޮޓް ބަނދަރުތަކަށް ހިލޭ.",
+    recent_label: 'މިއަދު ވަނީ ކާކު؟',
+    role_captain: 'ކެޕްޓަން', role_staff: 'މުވައްޒަފު', role_owner: 'ވެރިޔާ',
+    or_divider: 'ނުވަތަ ތިބާގެ ނަންބަރު',
+    field_label: 'ތިބާގެ މޯބައިލް ނަންބަރު',
+    cta_primary: 'ކޯޑް ފޮނުވާ',
+    alt_sso: 'ފިޝަރީޒް ޑިޕާޓްމަންޓް SSO',
+    pilot_tag: 'ޕައިލޮޓް',
+    shield_stage1: 'ތިބާގެ ޑޭޓާ ތިބާގެ. ISTN ގެ މަސްވެރި ޙައްޤުތައް ދަށުން ސަލާމަތް — 5 އަހަރު.',
+    sent_title: 'ތިބާގެ ކޯޑު ފޮނުވާފި',
+    expires_in: 'ހިންގާ ވަގުތު',
+    otp_label: '6-އަދަދުގެ ކޯޑު ޖައްސަވާ',
+    cta_verify: 'އޮޑިއަށް އަރާ',
+    back_btn: '→ ތަފާތު ނަންބަރު',
+    resend_link: 'އަލުން ފޮނުވާ',
+    shield_stage2: 'ހިއްސާކުރާ ޓެބްލެޓް. 8 ގަޑިއިރުގެ ތެރޭ ސެޝަން ނުހަނދާން.',
+    flag_label: '🌊 ބެންގާލް ބޭޒްގެ 4 ޤައުމާއެކު',
+    bottom_tag: 'BoBP-IGO ހިއްސާ ޤައުމުތައް · ޕައިލޮޓް',
+    terms: 'ޝަރުތުތައް', privacy: 'ޕްރައިވެސީ', rights: 'މަސްވެރި ޑޭޓާ ޙައްޤު',
+    left_foot: '© 2026 TrawlPro · ބެންގާލް ބޭޒްގެ ބައްތޭ',
+    left_foot_link: 'EU IUU · US SIMP',
+    photo_harbours: 'ސަރަހައްދުގެ މަސްވެރި ބަނދަރުތައް',
+    photo_fishers: 'މަސައްކަތުގައި މަސްވެރިން',
+    welcome_back: 'އަނބުރާ މަރުޙަބާ، {name}',
+    verify_your_number: 'ނަންބަރު ޔަޤީންކުރޭ',
+    enter_otp_sub: 'ފޯނަށް ފޮނުވި 6-އަދަދުގެ ކޯޑު ޖައްސަވާ.',
+    invalid_code: 'ކޯޑު ނުގުޅޭ. ޑިމޯއަށް 123456 ޖައްސަވާ.',
+    new_code_sent: 'އާ ކޯޑެއް ފޮނުވައިފި (ޑިމޯއަށް 123456).',
+    signing_in: 'އޮޑިއަށް އަރަނީ…'
+  }
+};
+
+let currentLang = 'en';
+
+function applyLang(lang) {
+  currentLang = lang;
+  const dict = i18n[lang] || i18n.en;
+
+  // RTL handling for Dhivehi
+  document.documentElement.lang = lang;
+  document.documentElement.dir = dict._rtl ? 'rtl' : 'ltr';
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key] == null) return;
+    if (key.endsWith('_html')) el.innerHTML = dict[key];
+    else el.textContent = dict[key];
+  });
+}
+
+$$('.lang-tabs button').forEach(b => {
+  b.addEventListener('click', () => {
+    $$('.lang-tabs button').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    const lang = b.getAttribute('data-lang') || 'en';
+    applyLang(lang);
+  });
+});
+
+// apply default on load
+applyLang('en');
+
+// ===== BoBP HOMEPAGE SLIDESHOW — crossfade rotation =====
+(function slideshow() {
+  const slides = $$('#photo-main .slide');
+  const dots = $$('#slide-dots .dot');
+  const captionEl = $('#slide-caption');
+  let i = 0;
+  setInterval(() => {
+    slides[i].classList.remove('active');
+    dots[i].classList.remove('active');
+    i = (i + 1) % slides.length;
+    slides[i].classList.add('active');
+    dots[i].classList.add('active');
+    if (captionEl && slides[i].dataset.caption) {
+      captionEl.style.opacity = '0';
+      setTimeout(() => {
+        captionEl.textContent = slides[i].dataset.caption;
+        captionEl.style.opacity = '1';
+      }, 200);
+    }
+  }, 4500);
+  // click dots to jump
+  dots.forEach((dot, idx) => dot.addEventListener('click', () => {
+    slides[i].classList.remove('active');
+    dots[i].classList.remove('active');
+    i = idx;
+    slides[i].classList.add('active');
+    dots[i].classList.add('active');
+    if (captionEl && slides[i].dataset.caption) captionEl.textContent = slides[i].dataset.caption;
+  }));
+})();
+</script>
+</body>
+</html>
